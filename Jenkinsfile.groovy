@@ -2,6 +2,9 @@
 
 pipeline {
 	agent none
+        tools {
+        maven "maven85"
+        }
   stages {
   	stage('Maven Install') {
     	agent {
@@ -20,4 +23,5 @@ pipeline {
       }
     }
   }
+
 }
