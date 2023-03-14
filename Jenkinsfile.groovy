@@ -1,25 +1,23 @@
 #!groovy
 
 pipeline {
-	agent none
-        tools {
-        maven "maven85"
-        }
+	agent any
+         tools{
+        maven "maven 3.9.0"
+    }
   stages {
-  	stage('Maven Install') {
-    	agent {
-      	docker {
-        	image 'maven:3.5.0'
-        }
-      }
-      steps {
-      	sh 'mvn clean install'
-      }
+  	stage('Build') {
+      steps {
+          withMaven(maven: 'maven-3.9.0'){
+          bat 'mvn clean install'
+      }
+    }
+  }
     }
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'docker build -t shanem/spring-petclinic:latest .'
+      	bat 'docker build -t shanem/spring-petclinic:latest .'
       }
     }
   }
